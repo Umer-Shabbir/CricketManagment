@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cricket Tournament Managment</title>
+</head>
+<body>
+    <div id="teams">
+        <div class="input">
+            <input id="team-name-input" type="text" placeholder="Enter Team Name">
+            <button id="add-team-btn">Add Team</button>
+        </div>
+        <div id="team-board">
+            <h2>Teams</h2>
+            <div id="teams-list">
+                
+            </div>
+            
+        </div>
+    </div>
+    <div id="groups">
+        <div class="input">
+            <select class="select" id="team-name"></select>
+            <select class="select" id="group-select">
+                <option value="A">Group A</option>
+                <option value="B">Group B</option>
+            </select>
+            <button id="add-to-group-btn">Assign to Group</button>
+        </div>
+        <div id="group-board">
+            <div id="groupA" class="group">
+                <h2>Group A</h2>
+                <ul>
+                    
+                </ul>
+            </div>
+            <div id="groupB" class="group">
+                <h2>Group B</h2>
+                <ul>
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="matches">
+        <div class="input">
+            <select class="select" id="match-team1"></select>
+            <select class="select" id="match-team2"></select>
+            <input id="match-date" type="date">
+            <button id="schedule-match-btn">Schedule Match</button>
+        </div>
+        <div id="match-board">
+            <h2>Matches</h2>
+            <div class="match">
+                <div>
+                   <table>
+                    <thead>
+                        <tr>
+                            <th>Team 1</th>
+                            <th>Team 2</th>
+                            <th>Date</th>
+                            <th>Delete</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="match-list">
+                    </tbody>
+                   </table>
+                </div>
+            </div>
+    </div>
+
+
+
+
+    <!-- Pop Up Forms -->
+     <div id="pop-up-form">
+        <form action="">
+            <label for="result">Result</label>
+            <select class="select" name="result" id="result-input">
+                <option value="team1">Team One</option>
+                <option value="team2">Team Two</option>
+                <option value="draw">Draw</option>
+                <option value="NR">No Result</option>
+            </select>
+
+            <button class="button" type="submit">Submit</button>
+        </form>
+     </div>
+    
+    <script src="./index.js" defer></script>
+</body>
+</html>
