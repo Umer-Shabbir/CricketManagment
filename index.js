@@ -5,8 +5,8 @@ const teamList = document.getElementById('team-list');
 const teamGroupInput = document.getElementById('team-name');
 const groupSelect = document.getElementById('group-select');
 const addToGroupButton = document.getElementById('add-to-group-btn');
-const groupAList = document.getElementById('groupA').querySelector('ul');
-const groupBList = document.getElementById('groupB').querySelector('ul');
+const groupAList = document.getElementById('groupA');
+const groupBList = document.getElementById('groupB');
 const delTeamInGroup = document.getElementById('del-team-in-group');
 const matchTeamOne = document.getElementById("match-team1");
 const matchTeamTwo = document.getElementById("match-team2");
@@ -90,6 +90,7 @@ teamAddButton.addEventListener('click', () => {
         localStorage.setItem("teams", JSON.stringify(teams));
         renderTeams();
         teamGroupName();
+        matchTeamGetter();
     }
 });
 
@@ -99,7 +100,8 @@ function renderTeams(){
     teams.forEach((team) => {
         const teamDiv = `
             <div class="team">
-                ${team.name}
+                <p>${team.name}</p>
+                <button id="del-team" class="${team.name}">Delete</button>
             </div>
             `
         teamBoard.innerHTML += teamDiv;
@@ -107,6 +109,23 @@ function renderTeams(){
         
     });
 }
+
+
+//Delete Team
+teamBoard.addEventListener('click', (e) => {
+    if(e.target.tagName === 'BUTTON' && e.target.id === 'del-team'){
+        const teamName = e.target.className;
+        const team = teams.find((team) => team.name === teamName);
+        deleteFromGroup(team.group, teamName);
+        teams = teams.filter((team) => team.name !== teamName);
+        localStorage.setItem("teams", JSON.stringify(teams));
+        renderTeams();
+        teamGroupName();
+        matchTeamGetter();
+        renderGroups();
+        
+    }
+});
 
 
 //Group Input
@@ -122,59 +141,71 @@ function teamGroupName(){
 
 
 //Add to Group
-function addTeamToGroup(){
+function addTeamToGroup() {
     const teamName = teamGroupInput.value;
     const group = groupSelect.value;
+    const team = teams.find((team) => team.name === teamName);
 
-    if(!teamName){
+    if (!teamName) {
         alert("Please Select A Team");
-
-    }else if(!group){
+    } else if (!group) {
         alert("Please Select A Group");
-    }else{
-        if(groups[group].includes(teamName)){
+    } else if (team.group) {
+        alert("Team Already In A Group");
+    } else {
+        if (groups[group].includes(teamName)) {
             alert("Team Already In Group");
-        }else{
+        } else {
+            // Add team to the group
             groups[group].push(teamName);
+            team.group = group;
+
+            // Update localStorage
+            localStorage.setItem("teams", JSON.stringify(teams));
             localStorage.setItem("groups", JSON.stringify(groups));
             renderGroups();
         }
     }
 }
 
-
-
-//Groups renderer
-function renderGroups(){
+// Groups renderer
+function renderGroups() {
     groupAList.innerHTML = "";
     groupBList.innerHTML = "";
-    groups.A.forEach((team) => {
-        const li = `
-            <li>
-                <div>
-                    ${team}
-                    <button id="del-team-in-group" class="${team}">Delete</button>
-                </div>
-            </li>
+
+    groups.A.forEach((teamName) => {
+        const row = `
+            <tr>
+                <td>${teamName}</td>
+                <td><button id="del-team" class="${teamName}">Delete</button></td>
+            </tr>
         `;
-        groupAList.innerHTML += li;
+        groupAList.innerHTML += row;
     });
-    groups.B.forEach((team) => {
-        const li = `
-            <li>
-                <div>
-                    ${team}
-                    <button id="del-team-in-group" class="${team}">Delete</button>
-                </div>
-            </li>`;
-        groupBList.innerHTML += li;
+
+    groups.B.forEach((teamName) => {
+        const row = `
+            <tr>
+                <td>${teamName}</td>
+                <td><button id="del-team" class="${teamName}">Delete</button></td>
+            </tr>
+        `;
+        groupBList.innerHTML += row;
     });
 }
+
 // Delete From Group
 function deleteFromGroup(groupName, teamName) {
-    // Remove the team from the specified group in the localStorage
-    groups[groupName] = groups[groupName].filter((team) => team !== teamName);
-    localStorage.setItem('groups', JSON.stringify(groups));
+    if (groupName && groups[groupName]) {
+        groups[groupName] = groups[groupName].filter((team) => team !== teamName);
+    }
+    // Clear the group for the team
+    const team = teams.find((team) => team.name === teamName);
+    if (team) {
+        team.group = "";
+    }
+    localStorage.setItem("groups", JSON.stringify(groups));
+    localStorage.setItem("teams", JSON.stringify(teams));
 }
 
 //Match Teams
