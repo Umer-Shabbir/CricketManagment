@@ -4,16 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cricket World Cup Super League Table</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #121212;
             color: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+        }
+        .button{
+            width: fit-content;
+            height: auto;
+            background: #065dcf;
+            color: white;
+            border: 0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
         }
 
         table {
@@ -59,13 +71,32 @@
         .negative {
             color: #ff3333;
         }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        #exportButton {
+            padding: 10px 20px;
+            background-color: #065dcf;
+            color: #fff;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 1rem 1rem;
+        }
+        #export-btn-div{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
-    <table>
+    <table id="captureArea">
         <thead>
             <tr>
                 <th>Team</th>
+                <th>Matches</th>
                 <th>Win</th>
                 <th>Lost</th>
                 <th>NR</th>
@@ -77,9 +108,15 @@
         
         </tbody>
     </table>
+    <div id="export-btn-div">
+        <button id="exportButton" class="button">Export to Image</button>
+        <a id="downloadLink" class="button" style="display: none;">Download Image</a>
+    </div>
+    
 
 
 
     <script src="/front end.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </body>
 </html>
