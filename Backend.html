@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Cricket Tournament Managment</title>
     <style>
-        *{
+        /* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -168,7 +168,7 @@ table th, td{
     border-radius: 0.5rem;
     cursor: pointer;
     padding: 0.5rem 1rem;
-}
+} */
     </style>
 </head>
 <body>
@@ -262,7 +262,7 @@ table th, td{
 
     <!-- Pop Up Forms -->
      <div id="pop-up-form">
-        <form action="">
+        <form>
             <label for="result">Result</label>
             <select class="select" name="result" id="result-input">
                 <option value="team1">Team One</option>
@@ -270,8 +270,12 @@ table th, td{
                 <option value="draw">Draw</option>
                 <option value="NR">No Result</option>
             </select>
+            <input type="number" id="team1-score" placeholder="Team One Score">
+            <input type="number" id="team1-overs-played" placeholder="Team One Overs Played">
+            <input type="number" id="team2-score" placeholder="Team Two Score">
+            <input type="number" id="team2-overs-played" placeholder="Team Two Overs Played">
 
-            <button class="button" type="submit">Submit</button>
+            <button class="button">Submit</button>
         </form>
      </div>
     
