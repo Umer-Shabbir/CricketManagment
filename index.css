@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.button{
+    width: fit-content;
+    height: auto;
+    background: #065dcf;
+    color: white;
+    border: 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 900px;
+    background-color: #1a1a1a;
+    border: 2px solid #ff3333;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    color: #fff;
+}
+
+th {
+    background-color: #333;
+    color: #ffcc00;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #292929;
+}
+
+tr:hover {
+    background-color: #ff3333;
+    color: #000;
+}
+
+.team-flag {
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.positive {
+    color: #00ff00;
+}
+
+.negative {
+    color: #ff3333;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+#exportButton {
+    padding: 10px 20px;
+    background-color: #065dcf;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem 1rem;
+}
+#export-btn-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
