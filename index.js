@@ -160,7 +160,7 @@ function calculateNRR(targetteam) {
 
     if (totalOversBowled > 0 && totalOversFaced > 0) {
 
-        let nrr = ((totalRunsScored / totalOversBowled) - (totalRunsConceded / totalOversFaced));
+        let nrr = ((totalRunsScored / totalOversFaced) - (totalRunsConceded / totalOversBowled));
 
         nrr = Math.round(nrr * 10000) / 10000;
 
