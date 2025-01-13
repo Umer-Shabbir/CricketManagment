@@ -15,6 +15,10 @@ const matchDateInput = document.getElementById("match-date");
 const matchlist = document.getElementById("match-board").querySelector('#match-list');
 const resultInputPopUp = document.getElementById("pop-up-form");
 const resultInput = document.getElementById("result-input");
+const teamOneScore = document.getElementById("team1-score");
+const teamTwoScore = document.getElementById("team2-score");
+const teamOneOver = document.getElementById("team1-overs");
+const teamTwoOver = document.getElementById("team2-overs");
 
 
 
@@ -79,7 +83,13 @@ teamAddButton.addEventListener('click', () => {
         wins: 0, 
         losses: 0,
         draws: 0, 
-        nr: 0
+        points: 0,
+        nrr: 0,
+        nr: 0,
+        totalRunsScored: 0,
+        totalOversBowled: 0,
+        totalRunsConceded: 0,
+        totalOversFaced: 0
     };
     if(!teamName){
         alert("Team Name Cannot Be Empty");
@@ -88,6 +98,7 @@ teamAddButton.addEventListener('click', () => {
     }else{
         teams.push(team);
         localStorage.setItem("teams", JSON.stringify(teams));
+        teamInput.value = "";
         renderTeams();
         teamGroupName();
         matchTeamGetter();
@@ -126,6 +137,45 @@ teamBoard.addEventListener('click', (e) => {
         
     }
 });
+
+// Net run rate calculator
+// function calculateNRR(targetteam) {
+//     const totalRunsScored = targetteam.totalRunsScored;
+//     const totalRunsConceded = targetteam.totalRunsConceded;
+//     const totalOversBowled = targetteam.totalOversBowled;
+//     const totalOversFaced = targetteam.totalOversFaced;
+
+//     let nrr = ((totalRunsScored / totalOversBowled) - (totalRunsConceded / totalOversFaced));
+//     nrr = Math.round(nrr * 10000) / 10000;
+//     const team = teams.find((team) => team.name === targetteam.name);
+//     team.nrr = nrr;
+//     localStorage.setItem("teams", JSON.stringify(teams));
+// }
+function calculateNRR(targetteam) {
+    const totalRunsScored = targetteam.totalRunsScored;
+    const totalRunsConceded = targetteam.totalRunsConceded;
+    const totalOversBowled = targetteam.totalOversBowled;
+    const totalOversFaced = targetteam.totalOversFaced;
+
+
+    if (totalOversBowled > 0 && totalOversFaced > 0) {
+
+        let nrr = ((totalRunsScored / totalOversBowled) - (totalRunsConceded / totalOversFaced));
+
+        nrr = Math.round(nrr * 10000) / 10000;
+
+        const team = teams.find((team) => team.name === targetteam.name);
+        
+        if (team) {
+            team.nrr = nrr;
+        }
+        localStorage.setItem("teams", JSON.stringify(teams));
+
+    } else {
+        console.warn(`Invalid data for team ${targetteam.name}: overs should be greater than zero`);
+    }
+
+}
 
 
 //Group Input
@@ -297,7 +347,13 @@ function inputMachResult(match) {
 
     // Listen for result submission
     resultInputPopUp.querySelector('button').addEventListener('click', () => {
-        const matchResult = resultInput.value.trim().toLowerCase(); // e.g., "team1", "team2", or "draw"
+        const teamOneScoreValue = teamOneScore.value.trim();
+        const teamTwoScoreValue = teamTwoScore.value.trim();
+        const teamOneOverValue = teamOneOver.value.trim();
+        const teamTwoOverValue = teamTwoOver.value.trim();
+        const matchResult = resultInput.value.trim().toLowerCase(); 
+
+        // Validate the input
         if (!matchResult) {
             alert("Please enter a valid result (team1, team2, or draw).");
             return;
@@ -312,22 +368,40 @@ function inputMachResult(match) {
 
         if (matchResult === "team1") {
             teamOne.wins += 1;
+            teamOne.points += 2;
             teamOne.matches += 1;
             teamTwo.matches += 1;
             teamTwo.losses += 1;
         } else if (matchResult === "team2") {
             teamTwo.wins += 1;
             teamOne.matches += 1;
+            teamTwo.points += 2;
             teamTwo.matches += 1;
             teamOne.losses += 1;
         } else if (matchResult === "draw") {
             teamOne.draws += 1;
             teamOne.matches += 1;
+            teamTwo.points += 1;
+            teamOne.points += 1;
             teamTwo.matches += 1;
             teamTwo.draws += 1;
         }else{
             teamOne.nr += 1;
+            teamOne.matches += 1;
+            teamTwo.matches += 1;
             teamTwo.nr += 1;
+        }
+
+        if (teamOneScoreValue && teamTwoScoreValue) {
+            teamOne.totalRunsScored += parseInt(teamOneScoreValue);
+            teamOne.totalRunsConceded += parseInt(teamTwoScoreValue);
+            teamOne.totalOversFaced += parseInt(teamTwoOverValue);
+            teamOne.totalOversBowled += parseInt(teamOneOverValue);
+
+            teamTwo.totalRunsScored += parseInt(teamTwoScoreValue);
+            teamTwo.totalRunsConceded += parseInt(teamOneScoreValue);
+            teamTwo.totalOversFaced += parseInt(teamOneOverValue);
+            teamTwo.totalOversBowled += parseInt(teamTwoOverValue);
         }
 
         // Save updates to local storage
@@ -338,6 +412,8 @@ function inputMachResult(match) {
         resultInputPopUp.style.display = "none";
 
         // Re-render matches and teams
+        calculateNRR(teamOne);
+        calculateNRR(teamTwo);
         renderMatches();
         renderTeams();
     });

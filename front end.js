@@ -20,10 +20,11 @@ function pointsRenderer() {
                 <td>${team.name}</td>
                 <td>${team.matches}</td>
                 <td>${team.wins}</td>
-                <td>${team.losses}</td> <!-- Fixed 'loses' to 'losses' -->
+                <td>${team.losses}</td>
+                <td>${team.draws}</td>
                 <td>${team.nr}</td>
-                <td>110</td>
-                <td class="positive">+0.262</td>
+                <td>${team.points}</td>
+                <td class="positive">${team.nrr}</td>
             </tr>
         `;
         pointsTable.innerHTML += pointTeam; 

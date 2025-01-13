@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/backend.css" />
     <title>Cricket Tournament Managment</title>
-    <style>
-        /*  */
-    </style>
 </head>
 <body>
     <div id="teams">
@@ -101,7 +98,8 @@
     <!-- Pop Up Forms -->
      <div id="pop-up-form">
         <form>
-            <label for="result">Result</label>
+            <h2>Result</h2>
+            <label for="result">Winner</label>
             <select class="select" name="result" id="result-input">
                 <option value="team1">Team One</option>
                 <option value="team2">Team Two</option>
@@ -109,13 +107,14 @@
                 <option value="NR">No Result</option>
             </select>
             <input type="number" id="team1-score" placeholder="Team One Score">
-            <input type="number" id="team1-overs-played" placeholder="Team One Overs Played">
+            <input type="number" id="team1-overs" placeholder="Team One Overs Played">
             <input type="number" id="team2-score" placeholder="Team Two Score">
-            <input type="number" id="team2-overs-played" placeholder="Team Two Overs Played">
+            <input type="number" id="team2-overs" placeholder="Team Two Overs Played">
 
             <button class="button">Submit</button>
         </form>
      </div>
+        
     
     <script src="./index.js" defer></script>
 </body>
